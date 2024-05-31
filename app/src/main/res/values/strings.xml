@@ -13,4 +13,7 @@
     <string name="title_profile">Profile</string>
     <string name="this_is_news_fragment">This is news fragment</string>
     <string name="this_is_profile_fragment">this is profile fragment</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="scan">Scan</string>
 </resources>
