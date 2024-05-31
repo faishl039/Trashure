@@ -1,5 +1,6 @@
 package com.example.trashure.ui.banksampah
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ class BankSampahFragment : Fragment() {
     private var _binding: FragmentBankSampahBinding? = null
     private val binding get() = _binding!!
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,21 +35,9 @@ class BankSampahFragment : Fragment() {
         _binding = FragmentBankSampahBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val webview: WebView = binding.webview
-        webview.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                return true
-            }
-        }
-        webview.settings.apply {
-            javaScriptEnabled = true
-            domStorageEnabled = true
-            cacheMode = android.webkit.WebSettings.LOAD_NO_CACHE
-        }
-        webview.loadUrl("https://waste4change.com/sendyourwaste")
+        val myWebView: WebView = binding.webview
+        myWebView.settings.javaScriptEnabled = true
+        myWebView.loadUrl("https://waste4change.com/sendyourwaste")
 
         return root
     }
