@@ -11,6 +11,6 @@
     <string name="title_upload">Upload</string>
     <string name="title_news">News</string>
     <string name="title_profile">Profile</string>
-    <string name="this_is_news_fragment">this is news fragment</string>
+    <string name="this_is_news_fragment">This is news fragment</string>
     <string name="this_is_profile_fragment">this is profile fragment</string>
 </resources>
