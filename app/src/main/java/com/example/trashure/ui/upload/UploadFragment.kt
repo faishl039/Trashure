@@ -1,11 +1,17 @@
 package com.example.trashure.ui.upload
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.trashure.R
+import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.trashure.databinding.FragmentUploadBinding
+import com.example.trashure.util.getImageUri
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,24 +24,65 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class UploadFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentUploadBinding? = null
+    private val binding get() = _binding!!
+    private var currentImageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_upload, container, false)
+        _binding = FragmentUploadBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        binding.cameraButton.setOnClickListener {
+            openCamera()
+            makeToast("anjay")
+        }
+        binding.galleryButton.setOnClickListener {
+            openGallery()
+        }
+
+        return root
+    }
+
+    private val openGallery = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            currentImageUri = uri
+            showImage()
+        } else {
+            Log.d("picker galeri", "gada foto yg dipilih")
+        }
+    }
+
+    private fun openGallery() {
+        openGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val launcerIntentCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { isSuccess ->
+        if (isSuccess) {
+            showImage()
+        }
+    }
+
+    private fun openCamera() {
+        currentImageUri = getImageUri(requireContext())
+        launcerIntentCamera.launch(currentImageUri!!)
+    }
+
+    private fun showImage() {
+        currentImageUri?.let {
+            binding.photo.setImageURI(it)
+        }
+    }
+
+    private fun makeToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
