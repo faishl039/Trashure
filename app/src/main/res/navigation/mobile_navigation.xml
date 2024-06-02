@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.trashure.ui.home.ArticleFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_article"
         tools:layout="@layout/fragment_article" />
 
     <!--    <fragment-->
