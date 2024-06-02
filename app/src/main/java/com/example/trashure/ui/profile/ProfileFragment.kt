@@ -1,11 +1,16 @@
 package com.example.trashure.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import com.example.trashure.R
+import com.example.trashure.ui.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +23,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment() {
+    lateinit var textFullName: TextView
+    lateinit var textEmail: TextView
+    lateinit var btnLogout: Button
+    val firebaseAuth = FirebaseAuth.getInstance()
+
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -27,6 +39,7 @@ class ProfileFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -37,6 +50,37 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Access the views using the view object
+        textFullName = view.findViewById(R.id.full_name)
+        textEmail = view.findViewById(R.id.email)
+        btnLogout = view.findViewById(R.id.btn_logout)
+
+        val firebaseUser = firebaseAuth.currentUser
+        if (firebaseUser!=null){
+            textFullName.text = firebaseUser.displayName
+            textEmail.text = firebaseUser.email
+        } else {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
+        btnLogout.setOnClickListener {
+            firebaseAuth.signOut()
+            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
+
+        // You can now set text or perform other operations on the TextViews
+        if (param1 != null) {
+            textFullName.text = param1
+        }
+        if (param2 != null) {
+            textEmail.text = param2
+        }
+    }
+
 
     companion object {
         /**
