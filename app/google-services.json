@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "943406522679",
+    "project_id": "trashure-4544b",
+    "storage_bucket": "trashure-4544b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943406522679:android:c61d89f6c7267ac828bab2",
+        "android_client_info": {
+          "package_name": "com.example.trashure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943406522679-fdapkog4u2jh76mgh05sf7hr5vat0ten.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trashure",
+            "certificate_hash": "f6fcfd35b69f6a9517be6b6d998c8d8a8111efd7"
+          }
+        },
+        {
+          "client_id": "943406522679-doe469liof76vf86aq2if9sa1jg860p1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiH-eYA5APD6BD5U_h81hzle0n4VC2W70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943406522679-doe469liof76vf86aq2if9sa1jg860p1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
