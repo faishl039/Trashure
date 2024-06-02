@@ -1,4 +1,4 @@
-package com.example.trashure.ui.home
+package com.example.trashure.ui.article
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

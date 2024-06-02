@@ -7,9 +7,14 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.trashure.ui.home.ArticleFragment"
+        android:name="com.example.trashure.ui.article.ArticleFragment"
         android:label="@string/title_article"
-        tools:layout="@layout/fragment_article" />
+        tools:layout="@layout/fragment_article">
+
+        <action
+            android:id="@+id/act_artcl_to_dtlArtcl"
+            app:destination="@+id/artclDtlFrgment"/>
+    </fragment>
 
     <!--    <fragment-->
     <!--        android:id="@+id/navigation_dashboard"-->

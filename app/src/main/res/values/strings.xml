@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Trashure</string>
-<!--    <string name="title_home">Home</string>-->
+    <!--    <string name="title_home">Home</string>-->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -17,4 +17,7 @@
     <string name="gallery">Galeri</string>
     <string name="scan">Scan</string>
     <string name="title_article">Artikel</string>
+    <string name="judul_artikel">Judul Artikel</string>
+    <string name="judul_artc">judul artikel</string>
+    <string name="deskripsi_artc">deskripsi artikel</string>
 </resources>
