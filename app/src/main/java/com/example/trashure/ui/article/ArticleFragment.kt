@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trashure.R
 import com.example.trashure.databinding.FragmentArticleBinding
@@ -20,16 +19,9 @@ class ArticleFragment : Fragment(), ArticleAdapter.OnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val homeViewModel =
-//            ViewModelProvider(this).get(ArticleViewModel::class.java)
-
         _binding = FragmentArticleBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 
@@ -43,7 +35,6 @@ class ArticleFragment : Fragment(), ArticleAdapter.OnItemClickListener {
             ArticleData("Article 4", R.drawable.botolplastik),
             ArticleData("Article 5", R.drawable.botolplastik),
             ArticleData("Article 6", R.drawable.botolplastik),
-            // Add more articles here
         )
 
         val adapter = ArticleAdapter(this)
