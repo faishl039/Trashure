@@ -8,7 +8,7 @@ android {
     signingConfigs {
         getByName("debug") {
             storeFile =
-                file("C:\\Users\\satrio\\AndroidStudioProjects\\Trashure\\mykeystore\\keystore.jks")
+                file("D:\\KULIAH\\SEMESTER 6\\Trashure\\mykeystore\\keystore.jks")
             storePassword = "12345678"
             keyAlias = "keytrashure"
             keyPassword = "12345678"

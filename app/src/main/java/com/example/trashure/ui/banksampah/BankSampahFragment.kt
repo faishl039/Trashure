@@ -35,10 +35,6 @@ class BankSampahFragment : Fragment() {
         _binding = FragmentBankSampahBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val myWebView: WebView = binding.webview
-        myWebView.settings.javaScriptEnabled = true
-        myWebView.loadUrl("https://waste4change.com/sendyourwaste")
-
         return root
     }
 

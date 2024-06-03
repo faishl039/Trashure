@@ -41,5 +41,18 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
->>>>>>> news
+    <string name="judul_artc">judul artikel</string>
+    <string name="deskripsi_artc">deskripsi artikel</string>
+    <string name="judul_artikel">Judul Artikel</string>
+    <string name="title_article">Artikel</string>
+    <string name="title_platform">Siap Memulai Pengelolaan Sampah\nyang Bertanggung Jawab?</string>
+    <string name="title_platform1">Biarkan kami memberi tahu anda mengenai platform yang bergerak di bidang pengelolaan sampah yang memiliki inovasi untuk mewujudkan Indonesia Bebas Sampah</string>
+    <string name="title_platform2">Berikut kami berikan informasi mengenai tempat di beberapa kota-kota besar yang dapat menampung sampah anda agar dapat di kelola dengan baik</string>
+    <string name="kota_contoh">Bekasi</string>
+    <string name="see_all">see all</string>
+    <string name="nama_tempat">nama tempat</string>
+    <string name="alamat_tempat">alamat tempat</string>
+    <string name="know_far">Ingin mengetahui tentang kami lebih lanjut\ndan mengelola sampah anda?</string>
+    <string name="gotoweb">Kunjungi website kami sekarang!</string>
+    >>>>>>> news
 </resources>
