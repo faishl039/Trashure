@@ -9,7 +9,8 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?android:attr/actionBarSize">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                         android:gravity="center"
                         android:text="@string/title_platform"
                         android:textColor="@android:color/black"
-                        android:textSize="20sp"
+                        android:textSize="29sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -54,7 +55,7 @@
                         android:minLines="3"
                         android:text="@string/title_platform1"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textSize="20sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -66,7 +67,7 @@
                         android:minLines="3"
                         android:text="@string/title_platform2"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textSize="20sp"
                         android:textStyle="normal" />
                 </LinearLayout>
             </FrameLayout>
@@ -122,7 +123,7 @@
                     android:gravity="center"
                     android:text="@string/know_far"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -130,6 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gotoweb"
+                    android:textSize="20sp"
                     android:autoLink="web"
                     android:textColorLink="@color/tosca_darken"
                     android:textStyle="bold" />
