@@ -2,13 +2,15 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
+
 }
 
 android {
     signingConfigs {
         getByName("debug") {
             storeFile =
-                file("D:\\KULIAH\\SEMESTER 6\\Trashure\\mykeystore\\keystore.jks")
+                file("C:\\Users\\satrio\\AndroidStudioProjects\\Trashure\\mykeystore\\keystore.jks")
             storePassword = "12345678"
             keyAlias = "keytrashure"
             keyPassword = "12345678"

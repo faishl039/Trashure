@@ -35,11 +35,11 @@ class HeadlinesAdapter(private val context: Context) : RecyclerView.Adapter<Head
         holder.author.text = (article.author ?: context.getString(R.string.unknown)).toString()
 
         // Date format change
-        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-        val outputDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val inputDate = article.publishedAt
-        val outputDate = outputDateFormat.format(inputDateFormat.parse(inputDate)!!)
-        holder.date.text = outputDate
+//        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+//        val outputDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//        val inputDate = article.publishedAt
+//        val outputDate = outputDateFormat.format(inputDateFormat.parse(inputDate)!!)
+        holder.date.text = article.publishedAt
 
         // News image
         Glide.with(context)

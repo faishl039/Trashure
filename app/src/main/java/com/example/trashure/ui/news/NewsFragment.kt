@@ -139,7 +139,7 @@ class NewsFragment : Fragment() {
 
     private fun getHeadLines() {
         hideAll()
-        val news = NewsService.newsInstance.getheadlines("trash", 1)
+        val news = NewsService.newsInstance.getheadlines("Trash", 1)
         news.enqueue(object : Callback<News> {
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 val headNews = response.body()
