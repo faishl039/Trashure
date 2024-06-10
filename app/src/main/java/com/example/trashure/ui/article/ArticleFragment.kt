@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,13 @@ class ArticleFragment : Fragment() {
 
         list.addAll(getListArticle())
         showRecyclerList()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // Show the action bar again when the fragment is destroyed
     }
 
     private fun getListArticle(): ArrayList<Article> {

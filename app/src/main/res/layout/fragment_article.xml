@@ -4,9 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.article.ArticleFragment">
+    tools:context=".ui.article.ArticleFragment"
+    android:background="@drawable/article">
 
-    <androidx.recyclerview.widget.RecyclerView
+
+    <ImageView
+        android:layout_width="258dp"
+        android:layout_height="211dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="332dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="136dp"
+        android:alpha="0.1"
+        android:rotation="30"
+        android:scaleType="fitCenter"
+        android:src="@drawable/leaf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvArticle"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -14,5 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="60dp"
         tools:listitem="@layout/item_article"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
