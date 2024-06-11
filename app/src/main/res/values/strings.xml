@@ -65,6 +65,12 @@
     <string name="nama_lengkap">Name</string>
     <string name="konfirmasi_kata_sandi">Confirmation Password</string>
     <string name="punya_akun">already have account?</string>
+    <string name="result">Hasil Analisis</string>
+    <string name="plastic">Plastic</string>
+    <string name="paper">Paper</string>
+    <string name="metal">Metal</string>
+    <string name="glass">Glass</string>
+    <string name="cardboard">Cardboard</string>
     <string-array name="data_name">
         <item>Langkah Awal Menuju Lingkungan Bersih</item>
         <item>Peran Penting Masyarakat dalam Daur Ulang Sampah Anorganik</item>
