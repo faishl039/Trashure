@@ -38,7 +38,6 @@ class UploadFragment : Fragment() {
 
         binding.cameraButton.setOnClickListener {
             openCamera()
-            makeToast("anjay")
         }
         binding.galleryButton.setOnClickListener {
             openGallery()
