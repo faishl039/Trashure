@@ -9,20 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.example.trashure.ui.article.ArticleFragment"
         android:label="@string/title_article"
-        tools:layout="@layout/fragment_article">
-    </fragment>
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/navigation_dashboard"-->
-    <!--        android:name="com.example.trashure.ui.dashboard.DashboardFragment"-->
-    <!--        android:label="@string/title_dashboard"-->
-    <!--        tools:layout="@layout/fragment_dashboard" />-->
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/navigation_notifications"-->
-    <!--        android:name="com.example.trashure.ui.notifications.NotificationsFragment"-->
-    <!--        android:label="@string/title_notifications"-->
-    <!--        tools:layout="@layout/fragment_notifications" />-->
+        tools:layout="@layout/fragment_article"/>
 
     <fragment
         android:id="@+id/navigation_bank_sampah"
@@ -34,7 +21,11 @@
         android:id="@+id/navigation_upload"
         android:name="com.example.trashure.ui.upload.UploadFragment"
         android:label="@string/title_upload"
-        tools:layout="@layout/fragment_upload" />
+        tools:layout="@layout/fragment_upload">
+        <action
+            android:id="@+id/act_upload_to_success"
+            app:destination="@+id/navigation_upload_success" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_news"
