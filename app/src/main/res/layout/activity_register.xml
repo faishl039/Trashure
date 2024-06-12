@@ -63,18 +63,21 @@
                 android:hint="@string/kata_sandi"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordConfLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:boxBackgroundMode="outline"
-            app:passwordToggleEnabled="true">
-            <EditText
+            android:layout_marginTop="8dp"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_conf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/konfirmasi_kata_sandi"/>
+                android:hint="@string/konfirmasi_kata_sandi"
+                android:inputType="textPassword" />
+
         </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"

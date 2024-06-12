@@ -1,5 +1,6 @@
 package com.example.trashure.ui.profile
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,97 +9,67 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import com.example.trashure.R
+import com.example.trashure.ViewModelFactory
 import com.example.trashure.ui.login.LoginActivity
-import com.google.firebase.auth.FirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
-    lateinit var textFullName: TextView
-    lateinit var textEmail: TextView
-    lateinit var btnLogout: Button
-    val firebaseAuth = FirebaseAuth.getInstance()
 
-
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var textEmail: TextView
+    private lateinit var btnLogout: Button
+    private val viewModel by viewModels<ProfileViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Access the views using the view object
-        textFullName = view.findViewById(R.id.full_name)
         textEmail = view.findViewById(R.id.email)
         btnLogout = view.findViewById(R.id.btn_logout)
 
-        val firebaseUser = firebaseAuth.currentUser
-        if (firebaseUser!=null){
-            textFullName.text = firebaseUser.displayName
-            textEmail.text = firebaseUser.email
-        } else {
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-            requireActivity().finish()
-        }
-        btnLogout.setOnClickListener {
-            firebaseAuth.signOut()
-            startActivity(Intent(requireActivity(), LoginActivity::class.java))
-            requireActivity().finish()
-        }
-
-        // You can now set text or perform other operations on the TextViews
-        if (param1 != null) {
-            textFullName.text = param1
-        }
-        if (param2 != null) {
-            textEmail.text = param2
-        }
-    }
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        viewModel.getSession().observe(viewLifecycleOwner) { session ->
+            if (session != null) {
+                textEmail.text = session.accessToken
             }
+        }
+
+        progressDialog = ProgressDialog(requireContext()).apply {
+            setTitle("Log out")
+            setMessage("Please wait...")
+            setCancelable(false)
+        }
+
+        viewModel.isLoggingOut.observe(viewLifecycleOwner) { isLoggingOut ->
+            if (isLoggingOut) {
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
+            }
+        }
+
+        viewModel.logoutComplete.observe(viewLifecycleOwner) { logoutComplete ->
+            if (logoutComplete) {
+                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                requireActivity().finish()
+            }
+        }
+
+        btnLogout.setOnClickListener {
+            viewModel.logout()
+        }
     }
+
 }

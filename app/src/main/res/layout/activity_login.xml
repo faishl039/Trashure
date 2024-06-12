@@ -60,15 +60,7 @@
             android:layout_marginTop="20dp"
             android:textAllCaps="false"
             android:text="@string/masuk"/>
-        <Button
-            android:id="@+id/btn_google"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:layout_marginTop="20dp"
-            android:textAllCaps="false"
-            android:text="@string/masuk_dengan_google"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -3,105 +3,108 @@ package com.example.trashure.ui.register
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.trashure.MainActivity
 import com.example.trashure.R
+import com.example.trashure.ViewModelFactory
+import com.example.trashure.databinding.ActivityRegisterBinding
 import com.example.trashure.ui.login.LoginActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.userProfileChangeRequest
 
 class RegisterActivity : AppCompatActivity() {
-    lateinit var editFullName: EditText
-    lateinit var editEmail: EditText
-    lateinit var editPassword: EditText
-    lateinit var editPasswordConf: EditText
-    lateinit var btnRegister : Button
-    lateinit var btnLogin : Button
-    var firebaseAuth = FirebaseAuth.getInstance()
 
-    lateinit var  progressDialog : ProgressDialog
-
-
-    override fun onStart() {
-        super.onStart()
-        if (firebaseAuth.currentUser!=null){
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+    private lateinit var binding: ActivityRegisterBinding
+    private val viewModel by viewModels<RegisterViewModel> {
+        ViewModelFactory.getInstance(this)
     }
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_register)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        editFullName = findViewById(R.id.full_name)
-        editEmail = findViewById(R.id.email)
-        editPassword = findViewById(R.id.password)
-        editPasswordConf = findViewById(R.id.password_conf)
-        btnRegister = findViewById(R.id.btn_register)
-        btnLogin = findViewById(R.id.btn_login)
-        progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Logging")
-        progressDialog.setMessage("Please wait...")
 
-        btnLogin.setOnClickListener{
+        progressDialog = ProgressDialog(this).apply {
+            setTitle("Registering")
+            setMessage("Please wait...")
+            setCancelable(false)
+        }
+
+        binding.btnLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
-        btnRegister.setOnClickListener {
-            if (editFullName.text.isNotEmpty() && editEmail.text.isNotEmpty() && editPassword.text.isNotEmpty()){
-                if (editPassword.text.toString() == editPasswordConf.text.toString()){
-                    processRegister()
-                }else{
-                    Toast.makeText(this,"Masukkan Password dengan benar", LENGTH_SHORT).show()
-                }
-            }else{
-                Toast.makeText(this,"Masukkan semua data dengan benar", LENGTH_SHORT).show()
+
+        binding.btnRegister.setOnClickListener {
+            register()
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
+            }
+        }
+
+        viewModel.isSuccess.observe(this) { isSuccess ->
+            if (isSuccess) {
+                showSuccessDialog()
+            }
+        }
+
+        viewModel.registerResult.observe(this) { result ->
+            if (result == null) {
+                showErrorDialog()
             }
         }
     }
 
-    private fun processRegister() {
-        val fullName = editFullName.text.toString()
-        val email = editEmail.text.toString()
-        val password = editPassword.text.toString()
+    private fun register() {
+        val name = binding.fullName.text.toString()
+        val email = binding.email.text.toString()
+        val password = binding.password.text.toString()
+        val confirmPassword = binding.passwordConf.text.toString()
 
-        progressDialog.show()
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if(task.isSuccessful){
-                    val userUpdateProfile = userProfileChangeRequest {
-                        displayName = fullName
+        if (password != confirmPassword) {
+            binding.passwordConf.error = "Konfirmasi password tidak cocok"
+            return
+        }
 
-                    }
-                    val user = task.result.user
-                    user!!.updateProfile(userUpdateProfile)
-                        .addOnCompleteListener {
-                            progressDialog.dismiss()
-                            startActivity(Intent(this, MainActivity::class.java))
-                        }
-                        .addOnFailureListener { error2 ->
-                            Toast.makeText(this,error2.localizedMessage, LENGTH_SHORT).show()
-                        }
-                }else{
-                    progressDialog.dismiss()
-                }
-            }
-            .addOnFailureListener { error ->
-                Toast.makeText(this,error.localizedMessage, LENGTH_SHORT).show()
-            }
+        viewModel.register(name, email, password)
     }
 
+    private fun showSuccessDialog() {
+        AlertDialog.Builder(this).apply {
+            setTitle("Yeah!")
+            setMessage("Akun dengan ${binding.email.text} sudah jadi nih. Yuk, login!")
+            setPositiveButton("Lanjut") { _, _ ->
+                val intent = Intent(context, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            create()
+            show()
+        }
+    }
 
+    private fun showErrorDialog() {
+        AlertDialog.Builder(this).apply {
+            setTitle("Error")
+            setMessage("Registrasi gagal. Silakan coba lagi.")
+            setPositiveButton("OK", null)
+            create()
+            show()
+        }
+    }
 }

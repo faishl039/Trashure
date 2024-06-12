@@ -3,160 +3,85 @@ package com.example.trashure.ui.login
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.trashure.MainActivity
 import com.example.trashure.R
+import com.example.trashure.ViewModelFactory
+import com.example.trashure.data.LoginResponse
+import com.example.trashure.databinding.ActivityLoginBinding
 import com.example.trashure.ui.register.RegisterActivity
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var editEmail: EditText
-    lateinit var editPassword: EditText
-    lateinit var btnRegister: Button
-    lateinit var btnLogin: Button
-    lateinit var btnGoogle: Button
-
-    lateinit var oneTapClient: SignInClient
-    lateinit var progressDialog: ProgressDialog
-
-    var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-
-    override fun onStart() {
-        super.onStart()
-        if (firebaseAuth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish() // Close the LoginActivity to prevent going back
-        }
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
     }
+    private lateinit var binding: ActivityLoginBinding
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        editEmail = findViewById(R.id.email)
-        editPassword = findViewById(R.id.password)
-        btnRegister = findViewById(R.id.btn_register)
-        btnLogin = findViewById(R.id.btn_login)
+
         progressDialog = ProgressDialog(this).apply {
             setTitle("Logging")
             setMessage("Please wait...")
-        }
-        btnGoogle = findViewById(R.id.btn_google)
-
-        oneTapClient = Identity.getSignInClient(this)
-
-        btnGoogle.setOnClickListener {
-            showGoogleAccountPicker()
+            setCancelable(false)
         }
 
-        btnLogin.setOnClickListener {
-            if (editEmail.text.isNotEmpty() && editPassword.text.isNotEmpty()) {
-                prosesLogin()
+        binding.btnLogin.setOnClickListener {
+            val email = binding.email.text.toString()
+            val password = binding.password.text.toString()
+            viewModel.login(email, password)
+        }
+
+        viewModel.loginStatus.observe(this) { isLoading ->
+            if (isLoading) {
+                progressDialog.show()
             } else {
-                Toast.makeText(this, "Isi data dengan benar", LENGTH_SHORT).show()
+                progressDialog.dismiss()
             }
         }
-        btnRegister.setOnClickListener {
+
+        viewModel.loginResult.observe(this) { result ->
+            result.onSuccess { response ->
+                onLoginSuccess(response)
+            }.onFailure { error ->
+                Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
-    private fun showGoogleAccountPicker() {
-        val signInRequest = BeginSignInRequest.builder()
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    .setServerClientId(getString(R.string.default_web_client_id))
-                    .setFilterByAuthorizedAccounts(false)
-                    .build()
-            )
-            .setAutoSelectEnabled(false)
-            .build()
-
-        oneTapClient.beginSignIn(signInRequest)
-            .addOnSuccessListener(this) { result ->
-                try {
-                    startIntentSenderForResult(
-                        result.pendingIntent.intentSender, RC_SIGN_IN,
-                        null, 0, 0, 0, null
-                    )
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Error starting One Tap Sign-In: ${e.localizedMessage}", LENGTH_SHORT).show()
-                }
+    private fun onLoginSuccess(user: LoginResponse) {
+        val email = binding.email.text.toString()
+        viewModel.saveSession(LoginResponse(email, user.accessToken, user.isLogin))
+        AlertDialog.Builder(this).apply {
+            setTitle("Yeah!")
+            setMessage("Anda berhasil login!")
+            setPositiveButton("Lanjut") { _, _ ->
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
             }
-            .addOnFailureListener(this) { e ->
-                Toast.makeText(this, "One Tap Sign-In failed: ${e.localizedMessage}", LENGTH_SHORT).show()
-            }
-    }
-
-    private fun prosesLogin() {
-        val email = editEmail.text.toString()
-        val password = editPassword.text.toString()
-
-        progressDialog.show()
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish() // Close the LoginActivity to prevent going back
-            }.addOnFailureListener { error ->
-                Toast.makeText(this, error.localizedMessage, LENGTH_SHORT).show()
-            }
-            .addOnCompleteListener {
-                progressDialog.dismiss()
-            }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == RC_SIGN_IN) {
-            try {
-                val credential = oneTapClient.getSignInCredentialFromIntent(data)
-                val idToken = credential.googleIdToken
-                if (idToken != null) {
-                    firebaseAuthWithGoogle(idToken)
-                } else {
-                    Toast.makeText(this, "No ID token!", LENGTH_SHORT).show()
-                }
-            } catch (e: ApiException) {
-                e.printStackTrace()
-            }
+            create()
+            show()
         }
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        progressDialog.show()
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish() // Close the LoginActivity to prevent going back
-            }.addOnFailureListener { error ->
-                Toast.makeText(this, error.localizedMessage, LENGTH_SHORT).show()
-            }
-            .addOnCompleteListener {
-                progressDialog.dismiss()
-            }
-    }
-
-    companion object {
-        private const val RC_SIGN_IN = 1000
     }
 }
