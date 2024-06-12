@@ -71,6 +71,7 @@
     <string name="metal">Metal</string>
     <string name="glass">Glass</string>
     <string name="cardboard">Cardboard</string>
+    <string name="success">Result</string>
     <string-array name="data_name">
         <item>Langkah Awal Menuju Lingkungan Bersih</item>
         <item>Peran Penting Masyarakat dalam Daur Ulang Sampah Anorganik</item>
