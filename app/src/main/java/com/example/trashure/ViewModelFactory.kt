@@ -8,6 +8,7 @@ import com.example.trashure.data.pref.UserRepository
 import com.example.trashure.ui.login.LoginViewModel
 import com.example.trashure.ui.profile.ProfileViewModel
 import com.example.trashure.ui.register.RegisterViewModel
+import com.example.trashure.ui.upload.UploadVM
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -22,6 +23,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UploadVM::class.java) -> {
+                UploadVM(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
