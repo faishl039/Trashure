@@ -7,7 +7,6 @@
     tools:context=".ui.banksampah.BankSampahFragment"
     android:background="@drawable/profil">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/avatar"

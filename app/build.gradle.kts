@@ -7,15 +7,6 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        getByName("debug") {
-            storeFile =
-                file("C:\\Users\\satrio\\AndroidStudioProjects\\Trashure\\mykeystore\\keystore.jks")
-            storePassword = "12345678"
-            keyAlias = "keytrashure"
-            keyPassword = "12345678"
-        }
-    }
     namespace = "com.example.trashure"
     compileSdk = 34
 
@@ -77,7 +68,7 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
-    implementation ("com.google.android.gms:play-services-auth:20.4.1")
+    implementation("com.google.android.gms:play-services-auth:20.4.1")
 
 
     //retrofit
@@ -86,10 +77,11 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     //Glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.trashure.ui.upload
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,21 +11,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import com.example.trashure.databinding.FragmentUploadBinding
 import com.example.trashure.util.getImageUri
+import com.example.trashure.util.reduceFileImage
+import com.example.trashure.util.uriToFile
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UploadFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UploadFragment : Fragment() {
     private var _binding: FragmentUploadBinding? = null
+    private val viewModel: UploadVM by viewModels()
     private val binding get() = _binding!!
     private var currentImageUri: Uri? = null
 
@@ -32,19 +27,40 @@ class UploadFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentUploadBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        obsUploadTrash()
+        obsLoading()
+
         binding.cameraButton.setOnClickListener {
             openCamera()
-            makeToast("anjay")
         }
         binding.galleryButton.setOnClickListener {
             openGallery()
         }
+        binding.uploadButton.setOnClickListener {
+            uploadTrash()
+        }
 
         return root
+    }
+
+    private fun obsLoading() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+    }
+
+    private fun obsUploadTrash() {
+        viewModel.uploadTrash.observe(viewLifecycleOwner) {
+            if (it != null) {
+                Log.d(TAG, "upload successful: ${it.message}")
+                makeToast("upload successful: ${it.message}")
+            } else {
+                Log.e(TAG, "upload failed: No response from server")
+            }
+        }
     }
 
     private val openGallery = registerForActivityResult(
@@ -81,27 +97,28 @@ class UploadFragment : Fragment() {
         }
     }
 
+    private fun uploadTrash() {
+        currentImageUri?.let {
+            val imageFile = uriToFile(it, requireContext()).reduceFileImage()
+            Log.d(TAG, "show path image: ${imageFile.path}")
+            viewModel.postImageTrash(imageFile)
+        }?: makeToast("foto tidak ada")
+    }
+
+//    private fun moveToResult() {
+//        val intent = Intent(requireContext(), UploadSuccessFragment)
+//    }
+
     private fun makeToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Upload.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UploadFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val TAG = "UPLOAD FRGMNT"
     }
 }
