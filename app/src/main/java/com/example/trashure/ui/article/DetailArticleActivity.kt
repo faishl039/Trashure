@@ -20,9 +20,7 @@ class DetailArticleActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true )
-
-        supportActionBar!!.title = "Article"
+        supportActionBar?.hide()
 
         val article = intent.getParcelableExtra<Article>("Article")
         if (article != null) {
