@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.trashure.network.ApiConfig
+import androidx.lifecycle.asLiveData
+import com.example.trashure.data.pref.UserRepository
+import com.example.trashure.network.response.TrashureResultResponse
 import com.example.trashure.network.response.TrashureUploadResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -14,43 +16,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class UploadVM : ViewModel() {
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+class UploadVM(private val repository: UserRepository) : ViewModel() {
+    val upImageResp: LiveData<TrashureUploadResponse> = repository.uploadTrash
+    val resultResp: LiveData<TrashureResultResponse> = repository.resultTrash
+    val isLoad: LiveData<Boolean> = repository.isLoading
 
-    private val _uploadTrash = MutableLiveData<TrashureUploadResponse>()
-    val uploadTrash: LiveData<TrashureUploadResponse> = _uploadTrash
-
-    fun postImageTrash(image: File) {
-        _isLoading.value = true
-        val imgRequestBody = RequestBody.create("image/jpeg".toMediaType(), image)
-        val imgPart = MultipartBody.Part.createFormData("image", image.name, imgRequestBody)
-
-        ApiConfig.getApi().postDetectTrash(imgPart)
-            .enqueue(object : Callback<TrashureUploadResponse> {
-                override fun onResponse(
-                    call: Call<TrashureUploadResponse>,
-                    response: Response<TrashureUploadResponse>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful) {
-                        _uploadTrash.value = response.body()
-                    } else {
-                        Log.e(
-                            TAG, "onfailure: ${response.message()}, ${response.code()}, ${
-                                response.errorBody()?.toString()
-                            }"
-                        )
-                    }
-                }
-
-                override fun onFailure(call: Call<TrashureUploadResponse>, t: Throwable) {
-                    Log.e(TAG, "onFailure: ${t.message}")
-                }
-            })
+    fun postImageTrash(token: String, image: File) {
+        repository.postImageTrash(token, image)
     }
 
-    companion object {
-        const val TAG = "UPLOAD"
+    fun getResultTrash(token: String) {
+        repository.getResultTrash(token)
     }
+
+    fun getSession() = repository.getSession().asLiveData()
 }
