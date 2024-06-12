@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.trashure.MainActivity
 import com.example.trashure.R
 import com.example.trashure.ViewModelFactory
-import com.example.trashure.data.LoginResponse
+import com.example.trashure.network.response.LoginResponse
 import com.example.trashure.databinding.ActivityLoginBinding
 import com.example.trashure.ui.register.RegisterActivity
 

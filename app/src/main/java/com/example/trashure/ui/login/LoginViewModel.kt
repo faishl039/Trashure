@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.trashure.data.LoginResponse
+import com.example.trashure.network.response.LoginResponse
 import com.example.trashure.data.pref.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call

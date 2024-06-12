@@ -1,4 +1,4 @@
-package com.example.trashure.data
+package com.example.trashure.network.response
 
 import com.google.gson.annotations.SerializedName
 
