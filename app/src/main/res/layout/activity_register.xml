@@ -16,7 +16,8 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/full"
-            android:layout_marginStart="105dp"
+            android:layout_gravity="center_horizontal"
+
             android:layout_marginTop="50dp"/>
         <TextView
             android:layout_width="match_parent"
