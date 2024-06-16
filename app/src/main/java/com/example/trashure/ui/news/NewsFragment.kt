@@ -109,7 +109,7 @@ class NewsFragment : Fragment() {
 
     private fun getAllNews() {
         hideAll()
-        val news = NewsService.newsInstance.geteverything("recycle", pageNum)
+        val news = NewsService.newsInstance.geteverything("sampah", pageNum)
         news.enqueue(object : Callback<News> {
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 val allNews = response.body()
