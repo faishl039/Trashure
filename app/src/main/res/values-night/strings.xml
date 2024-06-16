@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="konfirmasi_kata_sandi">Confirmation Password</string>
+    <string name="title_menu_1">Selamat Datang di Trashure!</string>
+    <string name="title_menu_2">Scan Sampah An-Organik</string>
+    <string name="title_menu_3">Informasi Mendetail</string>
+    <string name="title_menu_4">Kontribusi untuk Masa Depan</string>
+    <string name="desc_menu_1">Mulailah perjalanan Anda menuju lingkungan yang lebih bersih dengan Trashure, aplikasi cerdas yang membantu Anda mengelola sampah an-organik dengan lebih efisien. Yuk, bersama-sama kita jaga bumi!</string>
+    <string name="desc_menu_2">Dengan teknologi Machine Learning, Trashure mampu mengenali jenis sampah an-organik yang Anda miliki hanya dengan satu kali scan. Praktis dan cepat!</string>
+    <string name="desc_menu_3">Trashure akan merekomendasikan bank sampah an-organik terdekat dari lokasi Anda. Temukan tempat terbaik untuk mendaur ulang sampah Anda dengan mudah.</string>
+    <string name="desc_menu_4">Setiap tindakan kecil Anda untuk mendaur ulang sampah dapat memberikan dampak besar bagi lingkungan. Bersama Trashure, mari kita ciptakan masa depan yang lebih hijau dan bersih.</string>
 </resources>

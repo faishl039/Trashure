@@ -65,12 +65,9 @@
     <string name="nama_lengkap">Name</string>
     <string name="konfirmasi_kata_sandi">Confirmation Password</string>
     <string name="punya_akun">already have account?</string>
-    <string name="result">Hasil Analisis</string>
-    <string name="plastic">Plastic</string>
-    <string name="paper">Paper</string>
-    <string name="metal">Metal</string>
-    <string name="glass">Glass</string>
+    <string name="result">Hasil Analisis: Anorganik</string>
     <string name="cardboard">Cardboard</string>
+    <string name="resultDesc">Desc Result</string>
     <string name="success">Result</string>
     <string-array name="data_name">
         <item>Langkah Awal Menuju Lingkungan Bersih</item>
@@ -118,4 +115,15 @@
     <string name="desc_menu_3">Trashure akan merekomendasikan bank sampah an-organik terdekat dari lokasi Anda. Temukan tempat terbaik untuk mendaur ulang sampah Anda dengan mudah.</string>
     <string name="desc_menu_4">Setiap tindakan kecil Anda untuk mendaur ulang sampah dapat memberikan dampak besar bagi lingkungan. Bersama Trashure, mari kita ciptakan masa depan yang lebih hijau dan bersih.</string>
     <string name="learn_now">Start Now!</string>
+    <string name="explanation_cardboard">Cardboard/kardus adalah bahan yang terbuat dari kertas tebal yang umumnya digunakan untuk kemasan. Kardus sering digunakan untuk membuat kotak dan wadah untuk pengiriman barang. Kardus dapat didaur ulang dan digunakan kembali untuk membuat produk kertas lainnya. Proses daur ulang kardus mengurangi kebutuhan akan bahan baku baru dan membantu mengurangi limbah.</string>
+    <string name="explanation_glass">Glass/kaca adalah bahan yang terbuat dari pasir silika, soda abu, dan kapur. Kaca digunakan dalam berbagai produk seperti botol, toples, jendela, dan peralatan rumah tangga. Kaca dapat di daur ulang menjadi botol atau toples kaca yang baru, dan juga keramik.</string>
+    <string name="explanation_metal">Metal merupakan bahan yang kuat dan tahan lama yang digunakan dalam berbagai produk seperti kaleng, peralatan, kendaraan, dan struktur bangunan. Jenis logam yang sering didaur ulang termasuk aluminium dan baja. Metal dapat didaur ulang untuk membuat produk baru berbentuk logam batangan atau lembaran yang dapat digunakan kembali.</string>
+    <string name="explanation_paper">Paper/kertas adalah bahan yang terbuat dari serat kayu dan digunakan dalam berbagai produk seperti buku, koran, majalah, dan kemasan. Kertas juga digunakan untuk membuat tisu dan handuk kertas. Kertas dapat didaur ulang untuk membuat kertas baru atau produk kertas lainnya. Daur ulang kertas mengurangi kebutuhan akan penebangan pohon dan menghemat energi dan air.</string>
+    <string name="explanation_plastic">Plastik adalah bahan sintetis yang dibuat dari polimer organik dan digunakan dalam berbagai produk seperti botol, tas, peralatan, mainan, dan peralatan medis. Plastik sangat fleksibel dan tahan lama. Plastik dapat didaur ulang menjadi produk baru, seperti pakaian, peralatan rumah tangga, dan bahan konstruksi. Daur ulang plastik membantu mengurangi limbah plastik yang mencemari lingkungan.</string>
+    <string name="resultTime">Lama Terurai</string>
+    <string name="time_cardboard">Lama terurai: 2 sampai 5 bulan</string>
+    <string name="time_glass">Lama terurai: 1 Tahun bahkan lebih</string>
+    <string name="time_metal">Lama terurai: \\nAlumunium 80 hingga 200 Tahun\\nBaja 50 Tahun bahkan lebih</string>
+    <string name="time_paper">Lama terurai: 2 sampai 6 minggu</string>
+    <string name="time_plastic">Lama terurai: 450 Tahun bahkan bisa saja tidak terurai</string>
 </resources>
