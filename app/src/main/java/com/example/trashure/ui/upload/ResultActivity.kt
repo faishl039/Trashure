@@ -1,5 +1,6 @@
 package com.example.trashure.ui.upload
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -73,10 +74,36 @@ class ResultActivity : AppCompatActivity() {
                         val percentValue = numericValue.toFloat() * 100
                         val formattedValue = String.format("%.2f%%", percentValue)
                         binding.finalResult.text = "$name $formattedValue"
-//                        binding.glass.text = formattedValue
                         Log.d(TAG, "tertinggi: $name - $formattedValue")
+
+                        val explanation = when (name) {
+                            "Cardboard" -> getString(R.string.explanation_cardboard)
+                            "Glass" -> getString(R.string.explanation_glass)
+                            "Metal" -> getString(R.string.explanation_metal)
+                            "Paper" -> getString(R.string.explanation_paper)
+                            "Plastic" -> getString(R.string.explanation_plastic)
+                            else -> ""
+                        }
+                        binding.resultDesc.text = explanation
+
+                        val resTime = when (name) {
+                            "Cardboard" -> getString(R.string.time_cardboard)
+                            "Glass" -> getString(R.string.time_glass)
+                            "Metal" -> getString(R.string.time_metal)
+                            "Paper" -> getString(R.string.time_paper)
+                            "Plastic" -> getString(R.string.time_plastic)
+                            else -> ""
+                        }
+                        binding.resultTime.text = resTime
                     }
                 }
+            }
+
+            binding.gotoweb.setOnClickListener {
+                val url = "https://waste4change.com/"
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                startActivity(intent)
             }
         }
     }
